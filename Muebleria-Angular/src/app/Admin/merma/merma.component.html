@@ -1,0 +1,97 @@
+<div class="container mt-4">
+
+  <!-- Filtro por rango de fechas -->
+  <div class="d-flex justify-content-between mb-3">
+    <div class="d-flex">
+      <input type="date" [(ngModel)]="fechaInicio" class="form-control me-2" placeholder="Fecha inicio">
+      <input type="date" [(ngModel)]="fechaFin" class="form-control me-2" placeholder="Fecha fin">
+      <button class="btn btn-primary" (click)="filtrarPorFecha()">Filtrar</button>
+      <button class="btn btn-secondary" (click)="getMermas()">Resetear</button>
+    </div>
+    <button class="btn btn-success" (click)="abrirModal()">Agregar Merma</button>
+  </div>
+
+  <!-- Tabla de Mermas -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Fecha de Merma</th>
+        <th>Nombre de la Merma</th>
+        <th>ID Materia</th>
+        <th>Cantidad</th>
+        <th>Unidad de Medida</th>
+        <th>Causa</th>
+        <th>Comentarios</th>
+        <th>ID Usuario</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of merma">
+        <td>{{ item.fechaMerma | date }}</td>
+        <td>{{ item.nombre }}</td>
+        <td>{{ item.idMateria }}</td>
+        <td>{{ item.cantidad }}</td>
+        <td>{{ item.UnidadMedida }}</td>
+        <td>{{ item.causa }}</td>
+        <td>{{ item.comentarios }}</td>
+        <td>{{ item.idUsuario }}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="eliminarMerma(item.idMerma)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal para agregar Merma -->
+<div class="modal" tabindex="-1" [ngClass]="{'d-block': modalAbierto}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Merma</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="fechaMerma" class="form-label">Fecha de Merma</label>
+            <input type="date" id="fechaMerma" class="form-control" [(ngModel)]="nuevaMerma.fechaMerma" name="fechaMerma">
+          </div>
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" class="form-control" [(ngModel)]="nuevaMerma.nombre" name="nombre">
+          </div>
+          <div class="mb-3">
+            <label for="idMateria" class="form-label">Materia Prima</label>
+            <select id="idMateria" class="form-select" [(ngModel)]="nuevaMerma.idMateria" name="idMateria">
+              <option *ngFor="let materia of materiasPrimas" [value]="materia.idMateriaPrima">{{ materia.nombreMateriaPrima }}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="cantidad" class="form-label">Cantidad</label>
+            <input type="number" id="cantidad" class="form-control" [(ngModel)]="nuevaMerma.cantidad" name="cantidad">
+          </div>
+          <div class="mb-3">
+            <label for="UnidadMedida" class="form-label">Unidad de Medida</label>
+            <select id="UnidadMedida" class="form-select" [(ngModel)]="nuevaMerma.UnidadMedida" name="UnidadMedida">
+              <option *ngFor="let unidad of unidadesMedida" [value]="unidad.idUnidad">{{ unidad.nombreUnidad }}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="causa" class="form-label">Causa</label>
+            <input type="text" id="causa" class="form-control" [(ngModel)]="nuevaMerma.causa" name="causa">
+          </div>
+          <div class="mb-3">
+            <label for="comentarios" class="form-label">Comentarios</label>
+            <textarea id="comentarios" class="form-control" [(ngModel)]="nuevaMerma.comentarios" name="comentarios"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="guardarMerma()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

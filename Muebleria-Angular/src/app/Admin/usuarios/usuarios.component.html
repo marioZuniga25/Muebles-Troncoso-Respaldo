@@ -1,0 +1,74 @@
+<app-detalle-usuario [usuario$]="usuarioSeleccionado$" (usuarioActualizado)="actualizarUsuario()"
+  (cancelar)="cancelar()">
+</app-detalle-usuario>
+
+<div class="card-usuarios mt-4">
+  <div class="card">
+    <div class="card-header bg-dark text-white" style="border-radius: 15px 15px 0px 0px;">
+      <div class="row">
+        <div class="col-3">
+          <select class="form-select" [(ngModel)]="tipoUsuarioSeleccionado" (change)="filtrarUsuariosPorTipo()">
+            <option value="externos">Externos</option>
+            <option value="internos">Internos</option>
+          </select>
+        </div>
+        <div class="col-6">
+          <h4 class="mt-2 text-center">USUARIOS</h4>
+        </div>
+        <div class="col" style="position: absolute; margin-left: 71.5%;">
+          <button class="btn btn-light" (click)="agregarNuevoUsuario()">+</button>
+        </div>
+        <div class="col">
+          <app-buscador-compartido [items]="resultadosBusqueda" searchProperty="nombreUsuario"
+            placeholder="Buscar usuario..." (searchResults)="onSearchResults($event)">
+          </app-buscador-compartido>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div *ngIf="resultadosBusqueda.length > 0; else noUsuarios">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col" class="d-none">ID</th>
+              <th scope="col">Nombre de Usuario</th>
+              <th scope="col">Correo</th>
+              <th scope="col">Rol</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let usuario of resultadosBusqueda; trackBy: trackById">
+              <td class="d-none">{{ usuario.idUsuario }}</td>
+              <td>{{ usuario.nombreUsuario }}</td>
+              <td>{{ usuario.correo }}</td>
+              <td>
+                <!-- Solo mostrar el combo box para usuarios internos -->
+                <ng-container *ngIf="usuario.type === 1; else mostrarRolTexto">
+                  <select class="form-select" [(ngModel)]="usuario.rol"
+                    (change)="actualizarRol(usuario.idUsuario || 0, usuario.rol)">
+                    <option [value]="0">Usuario</option>
+                    <option [value]="1">Administrador</option>
+                  </select>
+                </ng-container>
+                <ng-template #mostrarRolTexto>
+                  <!-- Mostrar el texto del rol para usuarios externos -->
+                  {{ usuario.rol === 1 ? 'Administrador' : 'Usuario' }}
+                </ng-template>
+              </td>
+              <td>
+                <button class="btn btn-dark btn-sm" style="border-radius: 10px; color:white"
+                  (click)="verDetalle(usuario.idUsuario || 0)">
+                  Ver Detalles
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noUsuarios>
+        <p class="text-muted text-center">No hay usuarios disponibles.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

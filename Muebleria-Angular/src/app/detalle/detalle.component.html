@@ -1,0 +1,47 @@
+<div class="Detalle">
+    <div class="Detalle-producto">
+      <div class="Detalle-producto-container">
+        <div class="images">
+          <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+            <img [src]="producto.imagen" alt="{{ producto.nombreProducto }}">
+          </div>
+        </div>
+        <div class="text">
+          <h1>{{ producto.nombreProducto }}</h1>
+  
+          <!-- Muestra el precio original y el precio con descuento si hay promoción -->
+          <p class="price" *ngIf="tienePromocion">
+            <span class="strikethrough">${{ producto.precio | number:'1.2-2' }}</span>
+            <span class="descuento">${{ precioConDescuento | number:'1.2-2' }} MXN ({{ descuento }}% de descuento)</span>
+          </p>
+  
+          <!-- Muestra solo el precio normal si no hay promoción -->
+          <p class="price" *ngIf="!tienePromocion">
+            ${{ producto.precio | number:'1.2-2' }} MXN
+          </p>
+  
+          <p *ngIf="producto.stock > 0">
+            Cantidad: <span>{{ producto.stock }} disponibles</span>
+          </p>
+          <p *ngIf="producto.stock === 0" style="color: red;">
+            Agotado
+          </p>
+  
+          <div class="data">
+            <div class="col">
+              <div class="titulo data-titulo">
+                <h3>DESCRIPCIÓN</h3>
+              </div>
+              <div class="txt" style="display: block !important;">
+                <p>{{ producto.descripcion }}</p>
+              </div>
+            </div>
+          </div>
+  
+          <div class="tiempo">Tiempo aproximado de entrega 2 días</div>
+          <button class="btn-negro" (click)="agregarAlCarrito()">AGREGAR AL CARRITO</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

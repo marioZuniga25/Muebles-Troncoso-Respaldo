@@ -1,0 +1,301 @@
+<div class="cuenta">
+  <div class="cuenta-contenido">
+    <a href="" class="cerrar-sesion">
+      <p>Cerrar sesión</p>
+      <span class="fa fa-x"></span>
+    </a>
+    <div class="cuenta-contenido-titulo">
+      <a class="selected" href="#">MI PERFIL</a>
+    </div>
+    <div class="perfil">
+      <div class="perfil-misdatos">
+        <h2>MIS DATOS</h2>
+        <h3 class="text-center">MIS DATOS DE USUARIO</h3>
+        <h3>Nombre del usuario</h3>
+        <p>{{ userEdit.nombreUsuario || 'No tienes un perfil establecido aún.' }}</p>
+
+        <h3>Correo electrónico</h3>
+        <p>{{ personaEdit.correo || 'No tienes un perfil establecido aún.' }}</p>
+
+
+        <button (click)="abrirModalUsuario(idUsuario);" class="tarjeta-agregar-boton btn btn-success w-100"
+          title="Configurar Mi Usuario">
+          <i class="fa-duotone fa-solid fa-pen"></i> Editar mi usuario </button>
+
+
+        <h3 class="text-center">MIS DATOS PERSONALES</h3>
+
+        <h3>Nombres</h3>
+        <p>{{ personaEdit.nombre || 'No tienes un perfil establecido aún.' }}</p>
+
+        <h3>Apellidos</h3>
+        <p>{{ personaEdit.apellidos || 'No tienes un perfil establecido aún.' }}</p>
+
+        <h3>telefono</h3>
+        <p>{{ personaEdit.telefono || 'No tienes un perfil establecido aún.' }}</p>
+
+        <button (click)="abrirModalModificarPersona(personaId);" class="tarjeta-agregar-boton btn btn-success w-100"
+          title="Configurar Perfil">
+          <i class="fa-duotone fa-solid fa-plus"></i> {{ !personaEdit.nombre ? 'Establecer mi perfil' : 'Editar mi
+          perfil' }} </button>
+
+
+
+        <!-- New Addresses Section -->
+        <div class="perfil-misdirecciones mt-5">
+          <h2>MIS DIRECCIONES</h2>
+          <div class="direcciones-lista">
+            <div class="card mb-3" *ngFor="let direccion of direcciones">
+              <div class="card-body">
+                <div class="direccion-datos">
+                  <h5 class="direccion-nombre">{{ direccion.nombreDireccion }}</h5>
+                  <p class="direccion-detalle">{{ direccion.calle }}, {{ direccion.numero }}, {{ direccion.colonia }},
+                    {{ direccion.ciudad }}, {{ direccion.estado }} - {{ direccion.codigoPostal }}</p>
+                </div>
+                <div class="d-flex justify-content-end mt-3">
+                  <button class="btn btn-danger me-2" (click)="eliminarDireccion(direccion.id)">
+                    <span class="fa fa-trash"></span>
+                  </button>
+                  <button (click)="abrirModalEditarDireccion(direccion); $event.stopPropagation();"
+                    class="btn btn-warning" title="Editar">
+                    <span class="fa fa-edit"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="direccion-agregar">
+              <h3 style="font-size: 20px; padding-bottom: 20px;">
+                <i [ngClass]="isEditing ? 'fa fa-edit' : 'fa fa-map-marker-alt'"></i>
+                {{ isEditing ? 'Editar Dirección' : 'Agregar Nueva Dirección' }}
+              </h3>
+
+              <form (ngSubmit)="guardarDireccion()"
+                style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+
+                <!-- Campo: Nombre de Dirección -->
+                <div class="form-group campo-formulario">
+                  <label for="nombreDireccion">Nombre de Dirección</label>
+                  <input type="text" id="nombreDireccion" [(ngModel)]="nuevaDireccion.nombreDireccion"
+                    name="nombreDireccion" required>
+                  <div *ngIf="errorMessages.nombreDireccion" class="text-danger">
+                    {{ errorMessages.nombreDireccion }}
+                  </div>
+                </div>
+
+                <!-- Campo: Calle -->
+                <div class="form-group campo-formulario">
+                  <label for="calle">Calle</label>
+                  <input type="text" id="calle" [(ngModel)]="nuevaDireccion.calle" name="calle" required>
+                  <div *ngIf="errorMessages.calle" class="text-danger">
+                    {{ errorMessages.calle }}
+                  </div>
+                </div>
+
+                <!-- Campo: Número -->
+                <div class="form-group campo-formulario">
+                  <label for="numero">Número</label>
+                  <input type="text" id="numero" [(ngModel)]="nuevaDireccion.numero" name="numero" required>
+                  <div *ngIf="errorMessages.numero" class="text-danger">
+                    {{ errorMessages.numero }}
+                  </div>
+                </div>
+
+                <!-- Campo: Colonia -->
+                <div class="form-group campo-formulario">
+                  <label for="colonia">Colonia</label>
+                  <input type="text" id="colonia" [(ngModel)]="nuevaDireccion.colonia" name="colonia" required>
+                  <div *ngIf="errorMessages.colonia" class="text-danger">
+                    {{ errorMessages.colonia }}
+                  </div>
+                </div>
+
+                <!-- Campo: Ciudad -->
+                <div class="form-group campo-formulario">
+                  <label for="ciudad">Ciudad</label>
+                  <input type="text" id="ciudad" [(ngModel)]="nuevaDireccion.ciudad" name="ciudad" required>
+                  <div *ngIf="errorMessages.ciudad" class="text-danger">
+                    {{ errorMessages.ciudad }}
+                  </div>
+                </div>
+
+                <!-- Campo: Estado -->
+                <div class="form-group campo-formulario">
+                  <label for="estado">Estado</label>
+                  <select id="estado" [(ngModel)]="nuevaDireccion.estado" name="estado" required>
+                    <option value="" disabled selected>Seleccione un estado</option>
+                    <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+                  </select>
+                  <div *ngIf="errorMessages.estado" class="text-danger">
+                    {{ errorMessages.estado }}
+                  </div>
+                </div>
+
+                <!-- Campo: Código Postal -->
+                <div class="form-group campo-formulario">
+                  <label for="codigoPostal">Código Postal</label>
+                  <input type="text" id="codigoPostal" [(ngModel)]="nuevaDireccion.codigoPostal" name="codigoPostal"
+                    required>
+                  <div *ngIf="errorMessages.codigoPostal" class="text-danger">
+                    {{ errorMessages.codigoPostal }}
+                  </div>
+                </div>
+
+                <!-- Botón para enviar -->
+                <div class="form-group boton-enviar">
+                  <button type="submit" class="tarjeta-agregar-boton btn btn-success w-100">
+                    <i [ngClass]="isEditing ? 'fa fa-save' : 'fa fa-plus'"></i>
+                    {{ isEditing ? 'Guardar Cambios' : 'Agregar Dirección' }}
+                  </button>
+                </div>
+              </form>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="perfil-mistarjetas">
+        <h2>MIS TARJETAS</h2>
+        <div class="tarjetas-lista">
+          <div *ngFor="let tarjeta of tarjetas" class="tarjeta">
+            <div class="tarjeta-datos">
+              <p class="tarjeta-numero">** ** ** {{ tarjeta.numeroTarjeta.slice(-4) }}</p>
+              <p class="tarjeta-nombre">{{ tarjeta.nombrePropietario }}</p>
+              <p class="tarjeta-expira">Expira: {{ tarjeta.fechaVencimiento }}</p>
+            </div>
+            <button class="tarjeta-eliminar btn btn-danger" (click)="eliminarTarjeta(tarjeta.idTarjeta)">
+              <span class="fa fa-trash"></span> Eliminar
+            </button>
+
+
+          </div>
+
+
+          <div class="tarjeta-agregar">
+            <h3 style="font-size: 20px; padding-bottom: 20px;">Agregar Nueva Tarjeta</h3>
+            <form (ngSubmit)="agregarTarjeta()"
+              style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+              <div class="form-group"
+                style="width: calc(50% - 30px); margin: 0 10px; margin-bottom: 15px;text-align: left;">
+                <input type="hidden" id="idUsuario" [(ngModel)]="nuevaTarjeta.idUsuario" name="idUsuario"
+                  [value]="user?.idUsuario">
+                <label for="nombrePropietario">Nombre del Propietario</label>
+                <input
+                  style="width: 100%; border: none; border-bottom: 1px solid grey; outline: none; padding: 8px 10px;"
+                  type="text" id="nombrePropietario" [(ngModel)]="nuevaTarjeta.nombrePropietario"
+                  name="nombrePropietario" required>
+              </div>
+              <div class="form-group"
+                style="width: calc(50% - 30px); margin: 0 10px; margin-bottom: 15px;text-align: left;">
+                <label for="numeroTarjeta">Número de Tarjeta</label>
+                <input
+                  style="width: 100%; border: none; border-bottom: 1px solid grey; outline: none; padding: 8px 10px;"
+                  type="text" id="numeroTarjeta" [(ngModel)]="nuevaTarjeta.numeroTarjeta" name="numeroTarjeta" required
+                  minlength="16" maxlength="16" pattern="^[0-9]{16}$">
+              </div>
+              <div class="form-group"
+                style="width: calc(50% - 30px); margin: 0 10px; margin-bottom: 15px;text-align: left;">
+                <label for="fechaVencimiento">Fecha de Vencimiento (MM/AA)</label>
+                <input
+                  style="width: 100%; border: none; border-bottom: 1px solid grey; outline: none; padding: 8px 10px;"
+                  type="text" id="fechaVencimiento" [(ngModel)]="nuevaTarjeta.fechaVencimiento" name="fechaVencimiento"
+                  required pattern="^(0[1-9]|1[0-2])\/([0-9]{2})$">
+              </div>
+              <div class="form-group"
+                style="width: calc(50% - 30px); margin: 0 10px; margin-bottom: 15px;text-align: left;">
+                <label for="ccv">CCV</label>
+                <input
+                  style="width: 100%; border: none; border-bottom: 1px solid grey; outline: none; padding: 8px 10px;"
+                  type="text" id="ccv" [(ngModel)]="nuevaTarjeta.ccv" name="ccv" required minlength="3" maxlength="3"
+                  pattern="^[0-9]{3}$">
+              </div>
+              <button type="submit" class="tarjeta-agregar-boton btn btn-success w-100" style="margin-top: 20px;">
+                <span class="fa fa-plus"></span> Agregar Tarjeta
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="ultimo-inicio-sesion mt-4">
+          <h3>Último inicio de sesión</h3>
+          <!-- Mostrar la fecha en formato español -->
+          <p>Último inicio de sesión: {{ ultimoInicioSesion | date:'fullDate':'':'es-ES' }} a las {{ ultimoInicioSesion
+            | date:'hh:mm a':'':'es-ES' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isModalOpen" class="modal show">
+    <div class="modal-content">
+      <span class="close" (click)="cerrarModal()">&times;</span>
+      <h2 class="text-center">{{ userEdit.idUsuario === 0 ? 'Establecer mi perfil' : 'Editar mi perfil' }}</h2>
+      <!-- Formulario para editar o agregar perfil y usuario -->
+      <form (ngSubmit)="onSubmitPerfil()" class="mt-4">
+        <!-- Sección de Perfil (Persona) -->
+        <div class="form-group mt-4">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" [(ngModel)]="personaEdit.nombre" name="nombre" required>
+        </div>
+        <div class="form-group mt-4">
+          <label for="apellidos">Apellidos</label>
+          <input type="text" id="apellidos" [(ngModel)]="personaEdit.apellidos" name="apellidos" required>
+        </div>
+        <div class="form-group mt-4">
+          <label for="telefono">Teléfono</label>
+          <input type="text" id="telefono" [(ngModel)]="personaEdit.telefono" name="telefono" required
+            pattern="^\d{10}$" title="Debe contener 10 dígitos">
+        </div>
+        <div class="form-group mt-4 d-none">
+          <label for="correoPerfil">Correo de perfil</label>
+          <input type="email" id="correoPerfil" [(ngModel)]="personaEdit.correo" name="correoPerfil" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3 w-100">Guardar</button>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="isModalOpenUser" class="modal show">
+    <div class="modal-content">
+      <span class="close" (click)="cerrarModalUsuario()">&times;</span>
+      <h2 class="text-center">{{ userEdit.idUsuario === 0 ? 'Configurar mi usuario' : 'Editar mi usuario' }}</h2>
+      <!-- Formulario para editar usuario -->
+      <form (ngSubmit)="onSubmit()" class="mt-4">
+        <!-- Sección de Usuario -->
+        <div class="form-group mt-4">
+          <label for="nombreUsuario">Nombre de Usuario</label>
+          <input type="text" id="nombreUsuario" [(ngModel)]="userEdit.nombreUsuario" name="nombreUsuario" required>
+        </div>
+        <div class="form-group mt-4">
+          <label for="correoUsuario">Correo Electrónico</label>
+          <input type="email" id="correoUsuario" [(ngModel)]="userEdit.correo" name="correoUsuario" required>
+        </div>
+        <div class="form-group mt-4">
+          <label for="contraseniaActual">Contraseña Actual</label>
+          <input type="password" id="contraseniaActual" [(ngModel)]="contraseniaActual" name="contraseniaActual"
+            required>
+        </div>
+        <div class="form-group mt-4">
+          <label for="nuevaContrasenia">Nueva Contraseña</label>
+          <input type="password" id="nuevaContrasenia" [(ngModel)]="nuevaContrasenia" name="nuevaContrasenia" required>
+        </div>
+        <div class="form-group mt-4">
+          <label for="confirmarContrasenia">Confirmar Nueva Contraseña</label>
+          <input type="password" id="confirmarContrasenia" [(ngModel)]="confirmarContrasenia"
+            name="confirmarContrasenia" required>
+          <div *ngIf="mostrarErrorConfirmarContrasenia" class="text-danger">{{ mensajeErrorConfirmarContrasenia }}</div>
+        </div>
+        <div *ngIf="mostrarErrorContrasenia" class="text-danger">{{ mensajeErrorContrasenia }}</div>
+
+        <button type="submit" class="btn btn-primary mt-3 w-100">
+          <i class="fa fa-save"></i> Guardar Cambios
+        </button>
+      </form>
+    </div>
+  </div>
+
+</div>

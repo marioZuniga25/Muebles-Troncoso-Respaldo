@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Muebles Troncoso</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="assets/plugins/slick/slick-theme.css">
+  <link rel="stylesheet" href="assets/plugins/slick/slick.css">
+  <link rel="stylesheet" href="assets/plugins/validationEngine/validationEngine.jquery.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+  <!-- BOOTRAP 5-->
+  <link href="/assets/plugins/boostrap5/css/bootstrap.min.css" rel="stylesheet">
+ <!-- SWEETALERT2 -->
+ <link href="/assets/plugins/sweetalert2/css/sweetalert2.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="assets/ofertas.css">
+ <script src="assets/web-component.js" defer></script>
+</head>
+<body>
+  <app-root></app-root>
+  <script src="assets/plugins/jquery.min.js"></script>
+  <script src="assets/plugins/slick/slick.min.js"></script>
+  <script src="assets/plugins/validationEngine/jquery.validationEngine-es.js"></script>
+  <script src="assets/plugins/validationEngine/jquery.validationEngine.js"></script>
+  <script src="assets/plugins/slick/slick.js"></script>
+  <!-- script para el home -->
+  <script>
+    $('.carrousel-colecciones').slick({
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            pauseOnHover: false,
+            swipeToSlide: true,
+            responsive: [
+                {
+                    breakpoint: 840,
+                    settings: {
+                        slidesToShow: 3,
+                    }
+                },
+                {
+                    breakpoint: 520,
+                    settings: {
+                        slidesToShow: 2,
+                    }
+                }
+            ]
+        });
+  </script>
+  <!-- script para el layout -->
+  <script>
+    $(window).scroll(function() {
+        var scroll = $(window).scrollTop();
+
+        //>=, not <=
+        if (scroll >= 300) {
+            //clearHeader, not clearheader - caps H
+            $(".header").addClass("fixed");
+        }else{
+            $(".header").removeClass("fixed");
+        }
+    });
+    $('.cerrar').on('click', function(){
+        $('.registrarme').removeClass('active');
+        $('.login').removeClass('active');
+        $('.buscador').removeClass('active');
+        $('#buscador').removeClass('selected');
+        $('#registro').removeClass('selected');
+        $('.bag').removeClass('active');
+        $('#carrito').removeClass('selected');
+    })
+    $('#registro').on('click', function(){
+        $('.registrarme').addClass('active');
+        $('#registro').addClass('selected');
+        $('#buscador').removeClass('selected');
+        $('.buscador').removeClass('active');
+        $('.bag').removeClass('active');
+        $('#carrito').removeClass('selected');
+    })
+    $('#carrito').on('click', function(){
+        $('.bag').addClass('active');
+        $('#carrito').addClass('selected');
+        $('#buscador').removeClass('selected');
+        $('.buscador').removeClass('active');
+        $('.registrarme').removeClass('active');
+        $('#registro').removeClass('selected');
+        $('.login').removeClass('active');
+    })
+    $('#buscador').on('click', function(){
+        $('.registrarme').removeClass('active');
+        $('.login').removeClass('active');
+        $('.buscador').addClass('active');
+        $('#buscador').addClass('selected');
+        $('#registro').removeClass('selected');
+        $('.bag').removeClass('active');
+        $('#carrito').removeClass('selected');
+    })
+    $('#btnCuenta').on('click', function(){
+        $('.registrarme').removeClass('active');
+        $('.login').addClass('active');
+        $('#registro').addClass('selected');
+    })
+    $('#btnRegistrarme').on('click', function(){
+        $('.login').removeClass('active');
+        $('.registrarme').addClass('active');
+        $('#registro').addClass('selected');
+    })
+    // $(function(){
+    //     $('#formRegistro').validationEngine({
+    //         scroll: false
+    //     });
+    // });
+    // $(function(){
+    //     $('#formLogin').validationEngine({
+    //         scroll: false
+    //     });
+    // });
+  </script>
+  <!-- script del catalogo -->
+  <script>
+    $('.btnFiltros').on('click', function(){
+            $('.filtros').addClass('active');
+            $('html').addClass('active');
+        })
+        $('.cerrar').on('click', function(){
+            $('.filtros').removeClass('active');
+            $('html').removeClass('active');
+        })
+  </script>
+  <!-- script de gracias -->
+  <script>
+     $('.productos').slick({
+			slidesToShow: 3,
+			slidesToScroll: 1,
+			infinite: true,
+			arrows: true,
+			docts: true,
+			nextArrow: '<span class="icon icon-siguiente icon-sig"></span>',
+    		prevArrow: '<span class="icon icon-anterior icon-atras"></span>',
+            responsive: [
+                {
+                breakpoint: 765,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                },
+                },
+                {
+                breakpoint: 530,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+                },
+            ],
+		});
+  </script>
+  <!-- script del envio -->
+  <script>
+    // $(function(){
+    //         $('#formEnvio').validationEngine({
+    //             scroll: false
+    //         });
+    //     });
+  </script>
+  <!-- script del detalle -->
+  <script>
+    $(document).ready(function(){
+        $('.list').slick({
+            slidesToShow: 4,
+            asNavFor: '.open',
+            dots: false,
+            centerMode: true,
+            focusOnSelect: true,
+            vertical: true,
+            responsive: [
+                {
+                    breakpoint: 610,
+                    settings:{
+                        vertical: false
+                    }
+                }
+            ]
+        });
+        $('.open').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: '.list'
+        });
+
+        $('.carrousel').slick({
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 1000,
+            responsive:[
+                {
+                    breakpoint: 840,
+                    settings:{
+                        slidesToShow: 3,
+                    }
+                },
+                {
+                    breakpoint: 520,
+                    settings:{
+                        slidesToShow: 2,
+                    }
+                }
+            ]
+        });
+        $('.data-titulo').on('click', function(){
+            $(this).next().slideToggle();
+        });
+        $('#check-agregar').on('click', function(){
+            $('#formTallas').slideToggle();
+        });
+    });
+</script>
+  <!-- script del contacto -->
+  <script>
+    // $(document).ready(function(){
+    //         $('#formContacto').validationEngine('attach', {
+    //             scroll: false,
+    //             promptPosition: "topLeft"
+    //         });
+    //     });
+  </script>
+  <!-- script del bag -->
+  <script>
+    $('.desplegar').on('click', function(){
+        $(this).next().toggleClass('active');
+    })
+  </script>
+</body>
+<!-- BOOTSTRAP 5-->
+<script src="assets/plugins/boostrap5/js/bootstrap.min.js"></script>
+ <!-- SWEETALERT2 -->
+ <script src="/assets/plugins/sweetalert2/js/sweetalert2.all.min.js"></script>
+
+</html>

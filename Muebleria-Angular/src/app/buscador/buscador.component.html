@@ -1,0 +1,41 @@
+<div [ngClass]="{'buscador-visible': isVisible}" class="buscador">
+    <div class="buscador-contenido">
+      <div class="buscador-contenido-registro">
+        <span class="fa fa-x cerrar" (click)="toggleBuscador()"></span>
+        <h3 style="text-align: center !important;" class="title">BUSCAR</h3>
+        <div class="input input-buscador">
+          <input 
+            type="text" 
+            placeholder="¿Qué estas buscando?" 
+            [(ngModel)]="searchQuery"
+            (keydown.enter)="buscarProductos()"
+            (input)="buscarProductosPalabras()">
+          <span class="icon icon-flecha icono"></span>
+        </div>
+        <div class="resultados" *ngIf="productos.length > 0">
+          <p>{{ productos.length }} Resultados</p>
+          <a href="../catalogo">Ver todos</a>
+        </div>
+        <div class="buscador-producto" *ngIf="productos.length > 0">
+          <a [routerLink]="['/detalle', producto.idProducto]" *ngFor="let producto of productos" class="buscador-producto-result">
+            <div class="buscador-producto-result-img" >
+              <img [src]="producto.imagen" style="width: 100px;" [alt]="producto.nombre">
+            </div>
+            <div class="buscador-producto-result-text">
+              <p>{{ producto.nombreProducto }}</p>
+              <p>{{ producto.precio | currency }}</p>
+            </div>
+          </a>
+        </div>
+        <ng-template #noResults>
+          <div class="no-results">
+            <p>No se encontraron coincidencias</p>
+          </div>
+        </ng-template>
+        <div *ngIf="productos.length === 0">
+          <ng-container *ngTemplateOutlet="noResults"></ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  

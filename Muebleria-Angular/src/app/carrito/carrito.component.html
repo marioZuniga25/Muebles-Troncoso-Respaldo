@@ -1,0 +1,39 @@
+<div class="bag" *ngIf="mostrarBag$ | async">
+  <div class="bag-contenido">
+    <span style="position: absolute; top: 20px; left: 20px;" class="fa fa-x cerrar" (click)="toggleBag()"></span>
+    <h2 class="title">CARRITO</h2>
+    <div class="scroll" style="overflow-y: auto !important;">
+      <div class="bag-producto" *ngFor="let producto of carrito">
+        <div class="bag-producto-item">
+          <div class="bag-producto-item-contenido">
+            <div class="bag-producto-item-contenido-img">
+              <img style="max-width: 100px;" [src]="producto.imagen" alt="{{ producto.nombre }}">
+            </div>
+            <div class="bag-producto-item-contenido-text">
+              <div class="bag-titulo">
+                <h4>{{ producto.nombre }}</h4>
+              </div>
+              <div class="bag-descripcion">
+                <p style="margin: 0;"><strong>Cantidad</strong></p>
+                <div class="incrementar" style="display: flex; align-items: center;padding-bottom: 5px;">
+                  <span class="fa fa-minus" (click)="decrementarCantidad(producto.id)"></span>
+                  <input type="text" [value]="producto.cantidad" readonly>
+                  <span class="fa fa-plus" (click)="incrementarCantidad(producto.id, producto.stock)"></span>
+                </div>
+                <p><strong>Precio:</strong> ${{ producto.precio * producto.cantidad | number:'1.2-2' }}</p>
+              </div>
+            </div>
+            <div class="icono-eliminar" (click)="eliminarDelCarrito(producto.id)">
+              <span class="icon fa-solid fa-trash"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="boton" *ngIf="carrito.length > 0">
+      <a href="/bag">TERMINAR COMPRA</a>
+    </div>
+</div>
+  </div>
+  

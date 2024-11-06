@@ -1,0 +1,77 @@
+<div class="menu-container">
+    <nav>
+        <ul>
+            <li><a href="/admin/inicio">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+            </li>
+            <li><a href="/admin/venta">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Punto de Ventas</span></a>
+            </li>
+            <li><a href="/admin/tipoVenta">
+                <i class="fas fa-chart-line"></i>
+                <span>Ventas</span></a>
+            <li><a href="/admin/materiaprima">
+                    <i class="fas fa-cubes"></i>
+                    <span>Materias Primas</span>
+                </a>
+            </li>
+
+            <!-- Dropdown para Productos -->
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" (click)="toggleProductosDropdown($event)">
+                    <i class="fas fa-boxes"></i>
+                    <span>Productos</span>
+                </a>
+                <ul class="dropdown-menu" [ngClass]="{'show': isProductosDropdownOpen}">
+                    <li><a class="dropdown-item" href="/admin/productos"><i class="fas fa-box"></i> Productos</a></li>
+                    <li><a class="dropdown-item" href="/admin/produccion"><i class="fas fa-receipt"></i> Producción</a></li>
+                </ul>
+            </li>
+
+            <li><a href="/admin/proveedor">
+                    <i class="fas fa-truck"></i>
+                    <span>Proveedor</span>
+                </a>
+            </li>
+            <li><a href="/admin/compras-materias-primas">
+                <i class="fas fa-cart-plus"></i>
+                <span>Comprar Materias Primas</span>
+              </a></li>
+              
+            <li><a href="/admin/pedidos">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Pedidos</span>
+                </a>
+            </li>
+            <li><a href="admin/usuarios">
+                    <i class="fas fa-users"></i>
+                    <span>Usuarios</span>
+                </a>
+            </li>
+            <li><a href="/admin/merma">
+                <i class="fa fa-trash"></i>
+                <span>Merma</span>
+            </a>
+        </li>
+
+            <!-- Dropdown para Usuario -->
+            <ng-container *ngIf="user; else noUser">
+                <li class="user nav-item dropdown" (click)="toggleUserDropdown($event)">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="fas fa-user"></i>
+                        <span>{{ user.nombreUsuario }}</span>
+                    </a>
+                    <ul class="dropdown-menu" [ngClass]="{'show': isUserDropdownOpen}">
+                        <li><a class="dropdown-item" href="#" (click)="logout()">Cerrar sesión</a></li>
+                    </ul>
+                </li>
+            </ng-container>
+
+            <ng-template #noUser>
+            </ng-template>
+        </ul>
+    </nav>
+</div>

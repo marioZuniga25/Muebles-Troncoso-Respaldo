@@ -1,0 +1,16 @@
+INSERT INTO MateriaPrima (nombreMateriaPrima, descripcion, idInventario) VALUES 
+('Madera de Roble', 'Madera de alta calidad para muebles de lujo', 201),
+('Madera de Pino', 'Madera económica y versátil', 202),
+('Madera de Nogal', 'Madera dura con un color oscuro', 203),
+('Madera de Cedro', 'Madera resistente a la humedad', 204),
+('Madera de Haya', 'Madera clara y uniforme', 205),
+('Madera de Caoba', 'Madera exótica con acabado brillante', 206),
+('Madera de Abedul', 'Madera fuerte y de grano fino', 207),
+('Madera de Teca', 'Madera ideal para exteriores', 208),
+('Madera de Acacia', 'Madera duradera para muebles de exterior', 209),
+('Tornillos de Madera', 'Tornillos para ensamblaje de muebles', 210),
+('Pegamento para Madera', 'Adhesivo fuerte para unir piezas de madera', 211),
+('Laca Transparente', 'Acabado protector para madera', 212),
+('Barniz', 'Barniz para acabado de superficies', 213),
+('Clavos de Madera', 'Clavos resistentes para madera', 214),
+('Bisagras de Metal', 'Bisagras para puertas y cajones', 215);

@@ -1,0 +1,89 @@
+.menu-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+nav {
+    background-color: #111;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+ul li {
+    margin: 20px 0;
+    position: relative;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+
+ul li a:hover {
+    color: #1e90ff;
+}
+
+ul li a i {
+    margin-right: 10px;
+    font-size: 22px;
+}
+
+ul li a span {
+    font-size: 16px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0; /* Alinea el menú hacia la derecha */
+    background-color: #333; /* Color de fondo negro para un diseño neutral */
+    color: white; /* Texto en blanco */
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 5px 10px; /* Ajustar el padding para reducir el tamaño */
+    min-width: 150px; /* Tamaño mínimo del menú */
+    z-index: 1000;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item {
+    color: white; /* Asegúrate que el texto esté en blanco */
+    text-decoration: none;
+    padding: 5px 10px; /* Reducir el padding para un tamaño más pequeño */
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 14px; /* Reducir el tamaño de fuente */
+}
+
+.dropdown-item i {
+    margin-right: 10px;
+}
+
+.dropdown-item:hover {
+    background-color: #555; /* Color de fondo ligeramente más claro al pasar el mouse */
+}

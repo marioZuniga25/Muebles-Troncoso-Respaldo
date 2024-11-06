@@ -1,0 +1,67 @@
+<div class="contacto">
+    <div class="contacto-banner">
+        <h1>CONTÁCTANOS</h1>
+    </div>
+    <div class="contacto-queremos">
+        <div class="contacto-queremos-contenido">
+            <h2>
+                Queremos que tu experiencia de
+                compra sea excepcional.
+            </h2>
+            <br><br>
+            <p>
+                Si tienes alguna consulta sobre nuestros muebles, métodos de envío, o necesitas más información sobre nuestros productos,
+                por favor, ponte en contacto con nosotros completando el formulario a continuación.
+            </p>    
+            <div class="contacto-queremos-contenido-form">
+                <form id="formContacto" (ngSubmit)="enviarContacto(formContacto)" #formContacto="ngForm">
+                    <div class="input">
+                        <label for="Nombre">Nombre</label>
+                        <input type="text" id="Nombre" placeholder="Ingresa tu nombre" name="nombre" [(ngModel)]="contacto.nombre" required>
+                    </div>
+                    <div class="input">
+                        <label for="correo">Correo</label>
+                        <input type="email" id="correo" placeholder="Ingresa tu correo electrónico" name="correo" [(ngModel)]="contacto.correo" required>
+                    </div>
+                    <div class="input">
+                        <label for="Telefono">Teléfono</label>
+                        <input type="text" id="Telefono" placeholder="Ingresa tu teléfono móvil" name="telefono" [(ngModel)]="contacto.telefono" (input)="onPhoneNumberInput($event)" maxlength="12" required>
+                    </div>
+                    <div class="input">
+                        <label for="Mensaje">Mensaje</label>
+                        <textarea placeholder="Escribe tu duda aquí" name="mensaje" [(ngModel)]="contacto.mensaje" required></textarea>
+                    </div>
+                    <div class="boton">
+                        <button type="submit" [disabled]="formContacto.invalid">ENVIAR</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="layout2">
+        <div class="contacto-tienda">
+            <div class="contacto-tienda-imagen">
+                <img src="/assets/images/banner-contacto.png" alt="MUEBLES TRONCOSO - contacto">
+            </div>
+            <div class="contacto-tienda-text">
+                <h3 class="title">TIENDA</h3>
+                <div class="text">
+                    <div class="text-direccion">
+                        <h4>DIRECCIÓN</h4>
+                        <a href="https://maps.app.goo.gl/4EmpCULWmeViKz2WA" target="_blank">
+                            UTL UNIVERSIDAD TECNOLOGICA DE LEON GTO
+                        </a>
+                    </div>
+                    <div class="text-telefono">
+                        <h4>TELÉFONO</h4>
+                        <a href="tel:+524791451392">479 145 4345</a>
+                    </div>
+                    <div class="text-correo">
+                        <h4>CORREO</h4>
+                        <a href="mailto:prueba@gmail.com">prueba&#64;gmail.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

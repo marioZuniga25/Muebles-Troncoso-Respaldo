@@ -1,0 +1,45 @@
+<div class="card-materia-prima">
+  <div class="card-header bg-dark text-white" style="border-radius: 15px 15px 0px 0px;">
+    <div class="row">
+      <div class="col-9">
+        <h4 class="mt-2 text-center">MATERIAS PRIMAS</h4>
+      </div>
+      <div class="col">
+        <app-buscador-compartido [items]="materiasPrimas" searchProperty="nombreMateriaPrima"
+          placeholder="Buscar materia prima..." (searchResults)="onSearchResults($event)">
+        </app-buscador-compartido>
+      </div>
+    </div>
+  </div>
+  <div class="table-container" *ngIf="resultadosBusqueda.length > 0; else noMaterias">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="d-none">ID Materia Prima</th>
+          <th>Nombre Materia Prima</th>
+          <th>Descripción</th>
+          <th>Medida</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let materiaPrima of resultadosBusqueda" (click)="openEditModal(materiaPrima)" class="clickable-row">
+          <td class="d-none">{{ materiaPrima.idMateriaPrima }}</td>
+          <td>{{ materiaPrima.nombreMateriaPrima }}</td>
+          <td>{{ materiaPrima.descripcion }}</td>
+          <td>{{ materiaPrima.medida }}</td>
+          <td>{{ materiaPrima.precio }}</td>
+          <td>{{ materiaPrima.stock }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noMaterias>
+    <p class="mt-2 text-muted text-center">No hay materias primas disponibles.</p>
+  </ng-template>
+</div>
+
+
+

@@ -1,0 +1,130 @@
+<div class="card-recetas">
+  <!-- Encabezado de la tabla de recetas -->
+  <div class="card-header bg-dark text-white" style="border-radius: 15px 15px 0px 0px;">
+    <div class="row">
+      <div class="col-9">
+        <h4 class="mt-2 text-center">RECETAS</h4>
+      </div>
+      <div class="col">
+        <app-buscador-compartido [items]="productos" searchProperty="nombreProducto"
+          placeholder="Buscar receta..." (searchResults)="onSearchResults($event)">
+        </app-buscador-compartido>
+      </div>
+    </div>
+  </div>
+  <!-- Tabla de recetas -->
+  <div class="table-responsive mb-5" style="max-height: 48vh; overflow-y: auto;" *ngIf="resultadosBusqueda.length > 0; else noRecetas">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Imagen</th>
+          <th scope="col">Producto</th>
+          <th scope="col">Detalles</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let receta of resultadosBusqueda" (click)="abrirModalVerDetalles(receta)" style="cursor: pointer;">
+          <td>
+            <img [src]="getProductoImagen(receta.idProducto)" alt="Imagen del Producto" class="img-thumbnail" style="width: 100px; height: auto;">
+          </td>
+          <td>{{ getProductoNombre(receta.idProducto) }}</td> <!-- Muestra el nombre del producto -->
+          <td>
+            <ul>
+              <li *ngFor="let detalle of receta.detalles">
+                {{ getMateriaPrimaNombre(detalle.idMateriaPrima) }} - {{ detalle.cantidad }}
+              </li>
+            </ul>
+          </td>
+          <td>
+            <button (click)="abrirModalModificar(receta); $event.stopPropagation();" class="btn btn-primary" title="Editar"><i class="fa-duotone fa-solid fa-pen"></i></button>
+            <button (click)="eliminarReceta(receta.idReceta); $event.stopPropagation();" class="ms-2 btn btn-danger" title="Eliminar"><i class="fa-duotone fa-solid fa-trash"></i></button>
+            <button (click)="producirReceta(receta.idReceta); $event.stopPropagation();" class="ms-2 btn btn-secondary" title="Producir "><i class="fa-solid fa-hammer"></i><span class="ms-3">Producir</span></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noRecetas>
+    <p class="mt-2 text-muted text-center">No hay recetas disponibles.</p>
+  </ng-template>
+
+  <!-- Botón para agregar receta -->
+  <button class="add-btn mb-3 w-25" (click)="abrirModalAgregar()">Agregar Receta</button>
+</div>
+
+<!-- Modal para ver detalles -->
+<div class="modal" tabindex="-1" [ngClass]="{'show': isModalVerDetallesOpen}" style="display: block;" *ngIf="isModalVerDetallesOpen">
+  <div class="modal-dialog corregir modal-lg">
+    <div class="modal-content corregir-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center">DETALLES DE LA RECETA</h5>
+        <button type="button" class="btn-close" (click)="cerrarModalVerDetalles()"></button>
+      </div>
+      <div class="modal-body">
+        <h4 class="text-center">{{ getProductoNombre(recetaActual.idProducto) }}</h4>
+        <div class="d-flex justify-content-center">
+          <img [src]="getProductoImagen(recetaActual.idProducto)" alt="Imagen del Producto" class="img-thumbnail mb-3" style="width: 200px; height: auto; border-radius:15px;">
+        </div>
+        <hr>
+        <h5 class="text-center">Descripción</h5>
+        <p>{{ getProductoDescripcion(recetaActual.idProducto) }}</p>
+        <hr>
+        <h5 class="text-center">Materiales</h5>
+        <ul>
+          <li *ngFor="let detalle of recetaActual.detalles">
+            {{ getMateriaPrimaNombre(detalle.idMateriaPrima) }} - Cantidad: {{ detalle.cantidad }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal para agregar/modificar receta -->
+<div class="modal" tabindex="-1" [ngClass]="{'show': isModalOpen}" style="display: block;" *ngIf="isModalOpen">
+  <div class="modal-dialog corregir">
+    <div class="modal-content corregir-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ recetaActual.idReceta ? 'Modificar Receta' : 'Agregar Receta' }}</h5>
+        <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="idProducto" class="text-center">Producto</label>
+            <select id="idProducto" [(ngModel)]="recetaActual.idProducto" name="idProducto" class="form-control" required>
+              <option *ngFor="let producto of productos" [value]="producto.idProducto">{{ producto.nombreProducto }}</option>
+            </select>
+          </div>
+  
+          <div class="scrollable-details" style="max-height: 200px; overflow-y: auto;" #detallesContainer>
+            <div class="recetas-contenido">  
+                <div *ngFor="let detalle of recetaActual.detalles; let i = index" class="detalle-row p-3 mb-3 recetas-contenido-25" style="background-color: #f0f0f0; border-radius: 15px;">
+                  <div class="form-group" style="margin-bottom: 10px;">
+                    <label for="idMateriaPrima">Materia Prima:</label>
+                    <select id="idMateriaPrima" [(ngModel)]="detalle.idMateriaPrima" name="idMateriaPrima_{{i}}" class="form-control" required>
+                      <option *ngFor="let materia of materiasPrimas" [value]="materia.idMateriaPrima">{{ materia.nombreMateriaPrima }}</option>
+                    </select>
+                  </div>
+                  <div class="form-group d-flex justify-content-between align-items-center">
+                    <div style="flex: 1; margin-right: 10px;">
+                      <label for="cantidad">Cantidad:</label>
+                      <input type="number" id="cantidad" [(ngModel)]="detalle.cantidad" name="cantidad_{{i}}" class="form-control" required style="width: 80px;">
+                    </div>
+                    <button (click)="eliminarDetalle(i)" class="btn btn-danger mt-3"><i class="fas fa-trash-alt"></i></button>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="display: flex; justify-content: space-between;">
+            <button type="button" (click)="agregarDetalle()" class="btn btn-secondary">Agregar Detalle</button>
+            <button type="submit" class="btn btn-success">{{ recetaActual.idReceta ? 'Guardar Cambios' : 'Agregar Receta' }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

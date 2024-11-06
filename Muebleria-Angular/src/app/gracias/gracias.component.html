@@ -1,0 +1,26 @@
+<div class="gracias" style="padding-top: 145px !important">
+    <div class="gracias-contenido">
+        <div class="gracias-contenido-titulo">
+            <h1>¡GRACIAS POR TU PEDIDO!</h1>
+            <br>
+            <p>Te enviaremos tu pedido a tu domicilio</p>
+        </div>
+        <div class="gracias-contenido-resumen" style="justify-content: center !important;">
+            <div class="gracias-contenido-resumen-content">
+                <div class="gracias-contenido-resumen-content-text" style="padding: 0 !important;">
+                    <div class="gracias-titulo">
+                        <h2 class="title">RESUMEN</h2>
+                        <p class="title">{{ detallesVenta.length }}</p>
+                    </div>
+                    <div class="gracias-total">
+                        <p>TOTAL:</p>
+                        <p>{{ total | currency }}</p>
+                    </div>
+                    <div class="boton">
+                        <a href="/catalogo">SEGUIR COMPRANDO</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

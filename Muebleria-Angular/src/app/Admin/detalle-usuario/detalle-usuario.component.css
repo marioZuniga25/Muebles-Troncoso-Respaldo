@@ -1,0 +1,8 @@
+.card-detalle-usuario{
+    background-color: #F2F2F2;
+    border-radius:20px; 
+    margin:1%;
+    -webkit-box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
+    -moz-box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
+    box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
+}

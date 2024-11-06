@@ -1,0 +1,45 @@
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dropdown-toggle .fa-user {
+  margin-right: 10px;
+  /* Ajusta la separación entre el icono y el texto */
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  /* Ajusta la posición del menú desplegable */
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  border-radius: 5px;
+  z-index: 1000;
+  padding: 10px 0;
+  /* Espaciado interno */
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+  color: #333;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
+.iniciar-sesion:hover{
+  text-decoration: none;
+  color: black;
+}

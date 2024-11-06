@@ -1,0 +1,11 @@
+<div class="buscador-usuario" style="float: right;">
+  <input
+    type="text"
+    placeholder="Buscar por nombre de usuario"
+    [(ngModel)]="searchTerm"
+    (keydown)="onSearchKeyPress($event)"
+    (input)="onSearchClear()"
+    class="form-control"
+    style="border-radius: 10px;"
+  />
+</div>

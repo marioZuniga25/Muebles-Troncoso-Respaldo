@@ -1,0 +1,71 @@
+<div class="container mt-4">
+    <h4 class="mb-4 text-center">Resumen del Negocio</h4>
+  
+    <!-- Filtros de Fecha -->
+    
+  
+    <!-- Gráficos -->
+    <div class="row">
+      <!-- Total de Ventas -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h4>Total de Ventas</h4>
+            <div class="row mb-4">
+                <div class="col-md-5">
+                  <label for="fechaInicio">Fecha Inicio:</label>
+                  <input type="date" [(ngModel)]="fechaInicio" class="form-control" />
+                </div>
+                <div class="col-md-5">
+                  <label for="fechaFin">Fecha Fin:</label>
+                  <input type="date" [(ngModel)]="fechaFin" class="form-control" />
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                  <button class="btn btn-primary w-100" (click)="actualizarGrafico()">Filtrar</button>
+                </div>
+              </div>
+          </div>
+          <div class="card-body">
+            <canvas baseChart [data]="totalVentasData" [type]="'pie'" [options]="chartOptions" class="chart-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Productos Más Vendidos -->
+      <div class="col-md-6 mb-3">
+        <div class="card shadow-sm">
+          <div class="card-header bg-success text-white">
+            <h4>Productos Más Vendidos</h4>
+          </div>
+          <div class="card-body">
+            <canvas baseChart [data]="productosMasVendidosChart" [type]="'bar'" [options]="chartOptions" class="chart-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Usuarios Activos -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-info text-white">
+            <h4>Usuarios Activos</h4>
+          </div>
+          <div class="card-body">
+            <canvas baseChart [data]="usuariosActivosChart" [type]="'pie'" [options]="chartOptions" class="chart-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Productos por Categoría -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-warning text-dark">
+            <h4>Productos por Categoría</h4>
+          </div>
+          <div class="card-body">
+            <canvas baseChart [data]="productosPorCategoriaChart" [type]="'doughnut'" [options]="chartOptions" class="chart-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

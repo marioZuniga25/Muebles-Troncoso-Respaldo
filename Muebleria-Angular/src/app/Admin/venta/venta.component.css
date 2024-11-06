@@ -1,0 +1,91 @@
+.card-ventas {
+    background-color: #F2F2F2;
+    border-radius: 20px; 
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.product-image {
+    height: 250px; /* Altura ajustada para que las imágenes sean más pequeñas */
+    object-fit: cover; /* Mantiene la relación de aspecto */
+    border-radius: 10px; /* Borde redondeado */
+    margin-bottom: 10px; /* Espacio entre las imágenes */
+    width: 100%; /* Ajusta el ancho de la imagen */
+    cursor: pointer; /* Permite que la imagen sea clickeable */
+    background-color: white;
+   
+
+}
+.h1{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.venta-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.productos-disponibles {
+    flex: 3;
+    padding: 20px;
+    background-color: #f8f9fa; /* Fondo claro para resaltar */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.productos-seleccionados {
+    flex: 1;
+    background-color: #f8f9fa; /* Fondo claro para resaltar */
+    border-radius: 10px;
+    padding: 20px;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    background-color: #ffffff; /* Fondo blanco para las tarjetas */
+    border: 1px solid #e0e0e0; /* Añade un borde sutil */
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+    height: 100%; /* Mantiene la altura uniforme */
+    margin-bottom: 10%;
+
+}
+.product-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.selected-products-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+
+
+.card-body {
+    display: flex;
+    justify-content: space-between; /* Distribuye el contenido horizontalmente */
+    align-items: center; /* Alinea verticalmente en el centro */
+}

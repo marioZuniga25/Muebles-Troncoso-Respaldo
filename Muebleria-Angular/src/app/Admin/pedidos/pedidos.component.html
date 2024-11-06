@@ -1,0 +1,97 @@
+<div class="card-pedidos">
+  <div class="card-header bg-dark text-white" style="border-radius: 15px 15px 0px 0px;">
+    <div class="row">
+      <div class="col-9">
+        <h4 class="mt-2 text-center"><i class="fas fa-shopping-cart"></i> Pedidos</h4>
+      </div>
+    </div>
+  </div>
+  <div class="table-container">
+    <table class="table table-hover">
+      <thead class="bg-light">
+        <tr>
+          <th><i class="fas fa-user"></i> Nombre</th>
+          <th><i class="fas fa-phone"></i> Teléfono</th>
+          <th><i class="fas fa-envelope"></i> Correo</th>
+          <th><i class="fas fa-city"></i> Ciudad</th>
+          <th><i class="fas fa-map-marker-alt"></i> Estado</th>
+          <th><i class="fas fa-info-circle"></i> Detalle</th>
+          <th><i class="fas fa-tasks"></i> Estatus</th>
+          <th><i class="fas fa-paper-plane"></i> Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidos">
+          <td>{{ pedido.nombre }}</td>
+          <td>{{ pedido.telefono }}</td>
+          <td>{{ pedido.correo }}</td>
+          <td>{{ pedido.ciudad }}</td>
+          <td>{{ pedido.estado }}</td>
+          <td>
+            <button class="btn btn-dark" (click)="abrirModal(pedido)">
+              <i class="fas fa-eye"></i> Detalles
+            </button>
+          </td>
+          <td>{{ pedido.estatus }}</td>
+          <td>
+            <button class="btn btn-dark" (click)="enviarPedido(pedido.idPedido)" [disabled]="pedido.estatus === 'enviado'">
+              <i class="fas fa-paper-plane"></i> Enviar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noPedidos>
+    <p class="mt-2 text-muted text-center">No hay pedidos por el momento.</p>
+  </ng-template>
+</div>
+
+<!-- Modal para mostrar detalles del pedido -->
+<div class="modal" tabindex="-1" [ngClass]="{'show': isModalOpen}" style="display: block;" *ngIf="isModalOpen">
+  <div class="modal-dialog modal-lg corregir" >
+    <div class="modal-content corregir-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fas fa-box-open"></i> Detalles del Pedido #{{ pedidoActual?.idPedido }}</h5>
+        <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="contenido-pedidos">
+            <div class="contenido-pedidos-50">
+              <h6><i class="fas fa-user"></i> Información del Cliente</h6>
+              <p><strong>Nombre:</strong> {{ pedidoActual?.nombre }} {{ pedidoActual?.apellidos }}</p>
+              <p><strong>Teléfono:</strong> {{ pedidoActual?.telefono }}</p>
+              <p><strong>Correo:</strong> {{ pedidoActual?.correo }}</p>
+              <p><strong>Dirección: </strong> <br>
+                <span><i class="fas fa-road"></i> <strong>  Calle: </strong></span>{{ pedidoActual?.calle }} <br>
+                <span><i class="fas fa-hashtag"></i> <strong> Número: </strong></span> {{ pedidoActual?.numero }} <br>
+                <span><i class="fas fa-map-marked-alt"></i> <strong>Colonia: </strong></span> {{ pedidoActual?.colonia }} <br>
+                <span><i class="fas fa-city"></i> <strong>Ciudad: </strong></span> {{ pedidoActual?.ciudad }} <br>
+                <span><i class="fas fa-flag"></i> <strong>Estado:</strong> </span> {{ pedidoActual?.estado }} <br>
+                <span><i class="fas fa-envelope"></i> <strong>CP: </strong></span>{{ pedidoActual?.codigoPostal }}</p>
+            </div>
+            <div class="contenido-pedidos-50">
+              <h6 class="text-center"><i class="fas fa-boxes"></i> Productos en el Pedido</h6>
+              <div *ngFor="let producto of pedidoActual?.productos" class="row mb-3 product-item">
+                <div class="col-md-4">
+                  <img [src]="producto.imagen" alt="{{ producto.nombreProducto }}" class="img-fluid rounded" />
+                </div>
+                <div class="col-md-8">
+                  <p><strong>Producto:</strong> {{ producto.nombreProducto }}</p>
+                  <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+                  <p><strong>Precio Unitario:</strong> {{ producto.precioUnitario | currency }}</p>
+                  <p><strong>Cantidad:</strong> {{ producto.cantidad }}</p>
+                  <p><strong>Total:</strong> {{ producto.precioUnitario * producto.cantidad | currency }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModal()"><i class="fas fa-times"></i> Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<app-alert
+  [message]="alertMessage"
+  [type]="alertType"
+  [isVisible]="isAlertVisible"
+  (closed)="isAlertVisible = false">
+</app-alert>
+
+<div class="card-detalle-usuario">
+  <div *ngIf="usuario; else noUsuario" class="p-3">
+    <form (ngSubmit)="actualizarUsuario()" #usuarioForm="ngForm" novalidate>
+      <h4 class="text-center pb-2">Detalles de usuario</h4>
+      <div class="row g-3 align-items-center">
+        <div class="col-md-6">
+          <label for="nombreUsuario" class="form-label">Nombre de Usuario</label>
+          <input type="text" id="nombreUsuario" class="form-control"
+                 [(ngModel)]="usuario.nombreUsuario" name="nombreUsuario"
+                 required minlength="3" maxlength="20"
+                 #nombreUsuario="ngModel">
+          <div *ngIf="nombreUsuario.invalid && nombreUsuario.touched" class="text-danger">
+            <small *ngIf="nombreUsuario.errors?.['required']">El nombre de usuario es obligatorio.</small>
+            <small *ngIf="nombreUsuario.errors?.['minlength']">Debe tener al menos 3 caracteres.</small>
+            <small *ngIf="nombreUsuario.errors?.['maxlength']">No puede exceder 20 caracteres.</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="rol" class="form-label">Rol</label>
+          <ng-container *ngIf="usuario.type === 1; else rolNoEditable">
+            <select id="rol" class="form-select"
+                    [(ngModel)]="usuario.rol" name="rol"
+                    required #rol="ngModel">
+              <option [value]="0">Usuario</option>
+              <option [value]="1">Administrador</option>
+            </select>
+            <div *ngIf="rol.invalid && rol.touched" class="text-danger">
+              <small *ngIf="rol.errors?.['required']">El rol es obligatorio.</small>
+            </div>
+          </ng-container>
+          <ng-template #rolNoEditable>
+            <input type="text" id="rol" class="form-control" 
+                   [value]="usuario.rol === 1 ? 'Administrador' : 'Usuario'" 
+                   readonly>
+          </ng-template>
+        </div>
+      </div>
+      <div class="row g-3 mt-3">
+        <div class="col-md-6">
+          <label for="correo" class="form-label">Correo</label>
+          <input type="email" id="correo" class="form-control"
+                 [(ngModel)]="usuario.correo" name="correo"
+                 required email
+                 #correo="ngModel">
+          <div *ngIf="correo.invalid && correo.touched" class="text-danger">
+            <small *ngIf="correo.errors?.['required']">El correo es obligatorio.</small>
+            <small *ngIf="correo.errors?.['email']">Debe ser un correo electrónico válido.</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="text" id="password" class="form-control"
+                 [(ngModel)]="usuario.contrasenia" name="password"
+                 required minlength="6"
+                 #password="ngModel">
+          <div *ngIf="password.invalid && password.touched" class="text-danger">
+            <small *ngIf="password.errors?.['required']">La contraseña es obligatoria.</small>
+            <small *ngIf="password.errors?.['minlength']">Debe tener al menos 6 caracteres.</small>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary me-2" [disabled]="usuarioForm.invalid">Confirmar</button>
+        <button type="button" class="btn btn-secondary" (click)="cerrarDetalle()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+  <ng-template #noUsuario>
+    <h4 class="text-muted text-center pt-3 pb-3">Seleccione un usuario para ver los detalles.</h4>
+  </ng-template>
+</div>
+<hr>

@@ -1,0 +1,48 @@
+<div class="card-ventas mt-4">
+  <div class="card">
+    <div class="card-header bg-dark text-white" style="border-radius: 15px 15px 0px 0px;">
+      <div class="row">
+        <div class="col-3">
+          <select class="form-select" [(ngModel)]="tipoVentaSeleccionado" (change)="filtrarVentasPorTipo()">
+            <option value="Fisica">Fisica</option>
+            <option value="Online">Online</option>
+          </select>
+        </div>
+        <div class="col-6">
+          <h4 class="mt-2 text-center">VENTAS</h4>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div *ngIf="resultadosBusqueda.length > 0; else noVenta">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Fecha</th>
+              <th scope="col">Tipo deVenta</th>
+              <th scope="col">Usuario</th>
+              <th scope="col">Productos</th>
+              <th scope="col">Total Venta</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let venta of resultadosBusqueda; trackBy: trackById">
+              <td>{{ venta.fechaVenta | date:'short' }}</td>
+              <td>{{ venta.tipoVenta }}</td>
+              <td>{{ venta.usuario.nombreUsuario }}</td>
+              <!-- Muestra la lista de productos formateada -->
+              <td [innerHTML]="formatearListaProductos(venta.detalleVentas)"></td>
+              <!-- Muestra el total de la venta -->
+              <td>{{ venta.total | currency }}</td>
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noVenta>
+        <p class="text-muted text-center">No hay ventas disponibles.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

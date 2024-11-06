@@ -1,0 +1,11 @@
+<ng-container *ngIf="mostrarComponentes">
+  <app-header></app-header>
+  <app-carrito></app-carrito>
+  <router-outlet></router-outlet>
+  <app-footer></app-footer>
+</ng-container>
+
+<ng-container *ngIf="!mostrarComponentes">
+  <app-menu style="padding-bottom: 20px;"></app-menu>
+  <router-outlet></router-outlet>
+</ng-container>

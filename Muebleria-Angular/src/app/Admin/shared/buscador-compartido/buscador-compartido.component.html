@@ -1,0 +1,9 @@
+<div class="buscador-container">
+  <input 
+    type="text" 
+    [(ngModel)]="searchQuery" 
+    (input)="buscar()" 
+    [placeholder]="placeholder"
+    class="form-control" 
+  />
+</div>

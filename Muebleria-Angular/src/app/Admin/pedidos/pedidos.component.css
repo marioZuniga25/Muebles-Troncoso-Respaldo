@@ -1,0 +1,206 @@
+/* src/app/inventario/inventario.component.css */
+
+/* Estilos generales */
+.card-pedidos{
+  background-color: #F2F2F2;
+  border-radius:20px; 
+  margin: 4%;
+  -webkit-box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
+  -moz-box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
+  box-shadow: -3px 6px 41px -25px rgba(0,0,0,0.75);
+  padding: 1% 4% 4% 4%;
+}
+
+/* Estilos para la tabla */
+.table-container {
+  overflow-x: auto;
+  max-height: 400px; 
+  overflow-y: auto; 
+  border: 1px solid #ddd;
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  background-color: #fafafa;
+}
+
+.inventory-table th,
+.inventory-table td {
+  padding: 10px 15px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.inventory-table th {
+  position: sticky;
+  top: 0; 
+  z-index: 1; 
+  background-color: #f5f5f5;
+  color: #555;
+  font-weight: bold;
+  
+}
+
+.inventory-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.inventory-table tr:hover {
+  background-color: #e8f5e9;
+  cursor: pointer;
+}
+
+/* Estilos para el botón de agregar */
+.add-btn {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
+  background-color: #4caf50;
+  color: white;
+  padding: 12px;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+  margin-bottom: 20px;
+}
+
+.add-btn:hover {
+  background-color: #45a049;
+}
+
+
+/* Estilos para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 5px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #333;
+}
+
+/* Estilos para el formulario */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #4caf50;
+}
+
+.submit-btn {
+  display: block;
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.submit-btn:hover {
+  background-color: #45a049;
+}
+
+.delete-btn{
+  display: block;
+  width: 100%;
+  background-color: #de0c0c;
+  color: white;
+  padding: 10px;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.delete-btn:hover {
+  background-color: #fd5353;
+}
+.boton{
+  font-size: 14px;
+  color: #fff;
+  background: #000;
+  display: block;
+  max-width: max-content;
+  padding: 5px 40px;
+}
+
+.contenido-pedidos{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.contenido-pedidos-50{
+  width: calc(50% - 20px);
+}
+.corregir{
+  max-width: 1000px !important; 
+  margin: 0 auto !important; 
+}
+.corregir-content{
+  max-width: 100% !important; 
+  width: 100% !important;
+}

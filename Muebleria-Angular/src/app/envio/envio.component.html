@@ -1,0 +1,174 @@
+<div class="datos">
+    <div class="datos-titulo">
+        <div class="datos-titulo-linea">
+            <div class="linea">
+                <p class="selected">CARRITO</p>
+                <span class="icon icon-siguiente selected"></span>
+                <p class="selected">DATOS DE ENVÍO</p>
+                <span class="icon icon-siguiente"></span>
+                <p>RESUMEN</p>
+            </div>
+        </div>
+        <div class="datos-titulo-text">
+            <p>COMPRA</p>
+        </div>
+    </div>
+    <div class="datos-contenido">
+        <div class="datos-contenido-requerido" style="height: 975px !important; overflow-y: auto !important;">
+            <div class="logo">
+            </div>
+            <div class="datos-contenido-requerido-form">
+                <h3>ESCRIBE LOS DATOS DEL ENVÍO</h3>
+                <form id="formEnvio">
+                    <div class="formulario">
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="nombre">Nombre<label style="color:red">*</label></label>
+                                <input type="text" name="nombre" [(ngModel)]="nombre">
+                            </div>
+                        </div>
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="apellidos">Apellidos<label style="color:red">*</label></label>
+                                <input type="text" name="apellidos" [(ngModel)]="apellidos">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="telefono">Teléfono<label style="color:red">*</label></label>
+                                <input type="text" name="telefono" [(ngModel)]="telefono">
+                            </div>
+                        </div>
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="correo">Correo<label style="color:red">*</label></label>
+                                <input type="email" name="correo" [(ngModel)]="correo">
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="formulario">
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="calle">Calle<label style="color:red">*</label></label>
+                                <input type="text" name="calle" [(ngModel)]="calle">
+                            </div>
+                        </div>
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="numero">Número<label style="color:red">*</label></label>
+                                <input type="text" name="numero" [(ngModel)]="numero">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="colonia">Colonia<label style="color:red">*</label></label>
+                                <input type="text" name="colonia" [(ngModel)]="colonia">
+                            </div>
+                        </div>
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="cuidad">Cuidad<label style="color:red">*</label></label>
+                                <input type="text" name="ciudad" [(ngModel)]="ciudad">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formulario">
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="estado">Estado<label style="color:red">*</label></label>
+                                <select name="estado" [(ngModel)]="estado">
+                                    <option value="" disabled selected>Selecciona el estado</option>
+                                    <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+                                  </select>
+                            </div>
+                        </div>
+                        
+                        <div class="formulario-50">
+                            <div class="input">
+                                <label for="codigo">Código Postal<label style="color:red">*</label></label>
+                                <input type="text" name="codigo" [(ngModel)]="codigoPostal">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="datos-contenido-requerido-form">
+                <h3>SELECCIONA TU TARJETA PARA PAGAR</h3>
+                <div *ngIf="tarjetas && tarjetas.length > 0; else noTarjetas">
+                    <form action="">
+                        <div class="tarjetas-container">
+                            <label *ngFor="let tarjeta of tarjetas" class="tarjeta">
+                                <input type="radio" name="tarjeta" [value]="tarjeta.idTarjeta">
+                                <div class="tarjeta-info">
+                                    <p style="margin: 0 0 5px 0;">{{tarjeta.nombrePropietario}}</p>
+                                    <div class="tarjeta-numero">{{ formatCardNumber(tarjeta.numeroTarjeta) }}</div>
+                                    <div class="tarjeta-detalle">
+                                        <span>Vence: {{tarjeta.fechaVencimiento}}</span>
+                                        <span>CCV: **{{ tarjeta.ccv.slice(-1) }}</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            
+                <!-- Mostrar si no hay tarjetas -->
+                <ng-template #noTarjetas>
+                    <div class="no-tarjetas">
+                        <p>No tienes tarjetas guardadas. Necesitas ir a tu perfil a agregar alguna</p>
+                        <button style="border: none; border-radius: 12px; background-color: black; color: white; padding: 6px 30px; cursor: pointer;" [routerLink]="['/perfil', idUsuario]">Ir a mi perfil</button>
+                    </div>
+                </ng-template>
+            </div>                 
+            <div class="datos-contenido-requerido-botones" style="position: relative !important;width: 100% !important; padding: 60px 0;">
+                <a href="/bag" class="boton-volver">
+                    <span class="icon icon-anterior"></span>
+                    <p>Volver al carrito</p>
+                </a>
+                <div class="boton">
+                    <button (click)="confirmarPedido()">CONFIRMAR PEDIDO</button>
+                </div>
+            </div>
+        </div>
+        <div class="datos-contenido-bag">
+            <div class="datos-contenido-bag-descripcion">
+                <div class="descripcion">
+                    <div class="descripcion-titulo">
+                        <h2 class="title">CARRITO</h2>
+                    </div>
+                    <div class="descripcion-producto" *ngFor="let producto of carrito">
+                        <div class="producto-item">
+                            <div class="producto-item-img">
+                                <img [src]="producto.imagen" [alt]="producto.nombre">
+                                <div class="compras-item-datos">
+                                    <div class="dato-historico">
+                                        <p class="titulo">{{producto.nombre}}</p>
+                                    </div>
+                                    <div class="dato-historico">
+                                        <div class="dato-historico-item">
+                                            <p>Cantidad:</p>
+                                            <p>{{producto.cantidad}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="producto-item-precio">
+                                <p>${{ producto.precio | number:'1.2-2' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="descripcion-total">
+                        <p>TOTAL:</p>
+                        <p>${{ total | number:'1.2-2' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

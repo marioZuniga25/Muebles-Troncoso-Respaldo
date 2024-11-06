@@ -1,0 +1,129 @@
+<div class="card-producto">
+  <!-- Encabezado de la tabla de productos y buscador -->
+  <div class="card-header bg-dark text-white" style="border-radius: 15px 15px 0px 0px;">
+    <div class="row">
+      <div class="col-9">
+        <h4 class="mt-2 text-center">PRODUCTOS</h4>
+      </div>
+      <div class="col">
+        <app-buscador-compartido [items]="productos" searchProperty="nombreProducto"
+          placeholder="Buscar producto..." (searchResults)="onSearchResults($event)">
+        </app-buscador-compartido>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de productos -->
+  <div class="table-responsive" style="max-height: 48vh; overflow-y: auto;" *ngIf="resultadosBusqueda.length > 0; else noProductos">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="d-none">ID</th>
+          <th scope="col">Imagen</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Categoría</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of resultadosBusqueda" (click)="abrirModalModificar(producto)">
+          <td class="d-none">{{ producto.idProducto }}</td>
+          <td><img [src]="producto.imagen" alt="Imagen del producto" style="width: 100px; border-radius: 15px;"></td>
+          <td>{{ producto.nombreProducto }}</td>
+          <td>{{ producto.descripcion }}</td>
+          <td>{{ producto.nombreCategoria }}</td>
+          <td>{{ producto.precio }}</td>
+          <td>{{ producto.stock }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noProductos>
+    <p class="mt-2 text-muted text-center">No hay productos disponibles.</p>
+  </ng-template>
+
+  <!-- Botón para agregar producto -->
+  <button class="add-btn mb-3 w-25" (click)="abrirModalAgregar()">Agregar Producto</button>
+</div>
+
+<!-- Modal para agregar/modificar producto -->
+<div class="modal" tabindex="-1" [ngClass]="{'show': isModalOpen}" style="display: block;" *ngIf="isModalOpen">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ esModificacion ? 'Modificar Producto' : 'Agregar Producto' }}</h5>
+        <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form #productoForm="ngForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="nombreProducto">Nombre:</label>
+                <input type="text" id="nombreProducto" [(ngModel)]="productoActual.nombreProducto" name="nombreProducto"
+                  class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" [(ngModel)]="productoActual.descripcion" name="descripcion"
+                  class="form-control" required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" [(ngModel)]="productoActual.precio" name="precio" class="form-control"
+                  required>
+              </div>
+              <div class="form-group">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" [(ngModel)]="productoActual.stock" name="stock" class="form-control"
+                  required>
+              </div>
+              <div class="form-group">
+                <label for="idCategoria">Categoría:</label>
+                <select id="idCategoria" [(ngModel)]="productoActual.idCategoria" name="idCategoria" class="form-control" required>
+                    <option value="" disabled [selected]="!productoActual.idCategoria || productoActual.idCategoria === 0">
+                        Seleccione una categoría...
+                    </option>
+                    <option *ngFor="let categoria of categorias" [ngValue]="categoria.idCategoria">
+                        {{ categoria.nombreCategoria }}
+                    </option>
+                </select>
+            </div>
+            
+              <div class="form-group d-none">
+                <label for="idInventario">Inventario:</label>
+                <input type="number" id="idInventario" [(ngModel)]="productoActual.idInventario" name="idInventario"
+                  class="form-control" required>
+              </div>
+            </div>
+
+            <!-- Columna para la imagen -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+              <div class="image-upload-wrapper">
+                <label for="imagen" class="image-upload-label">
+                  <div *ngIf="!productoActual.imagen; else imagePreview" class="upload-placeholder">
+                    <i class="fa fa-plus"></i>
+                  </div>
+                  <ng-template #imagePreview>
+                    <img [src]="productoActual.imagen" alt="Imagen del producto" class="img-thumbnail">
+                  </ng-template>
+                </label>
+                <input type="file" id="imagen" (change)="onFileSelected($event)" accept="image/*" class="form-control"
+                  hidden>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="modal-footer">
+            <button type="submit" class="add-btn-modal w-100">{{ esModificacion ? 'Guardar Cambios' : 'Agregar Producto' }}</button>
+            <button *ngIf="esModificacion" type="button" class="delete-btn w-100"
+              (click)="eliminarProducto(productoActual.idProducto)">Eliminar Producto</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

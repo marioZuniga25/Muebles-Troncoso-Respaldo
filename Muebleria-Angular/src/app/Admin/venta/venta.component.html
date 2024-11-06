@@ -1,0 +1,63 @@
+<div class="card-ventas">
+    <h1>Punto de Venta</h1>
+    <div class="search-bar">
+        <input 
+            type="text" 
+            id="search" 
+            placeholder="Buscar productos..." 
+            [(ngModel)]="terminoBusqueda" 
+            (input)="buscarProductos()"
+            class="form-control" 
+        />
+    </div>
+
+    <div class="venta-container d-flex">
+        <div class="productos-disponibles">
+            <h2>Productos Disponibles</h2>
+            <div *ngIf="products.length > 0; else noProductos" class="products-table">
+                <div class="row">
+                    <div class="col-md-4" *ngFor="let product of products" (click)="agregarProducto(product)">
+                        <div class="product-card">
+                            <img src="{{product.imagen}}" class="product-image" alt="Imagen de producto {{product.nombreProducto}}">
+                            <h3>{{product.nombreProducto}}</h3>
+                            <p>Precio: ${{product.precio}}</p>
+                            <p>Stock: {{product.stock}}</p>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-template #noProductos>
+                <p class="text-muted text-center">No hay productos disponibles.</p>
+            </ng-template>
+        </div>
+    
+        
+
+        <div class="productos-seleccionados">
+            <h2>Productos Seleccionados</h2>
+            <div class="productos-seleccionados">
+                <div *ngFor="let selectedProduct of selectedProducts; let i = index" class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ selectedProduct.producto.nombreProducto }}</h5>
+                        <p class="card-text">Precio Unitario: ${{ selectedProduct.producto.precio }}</p>
+                        <p class="card-text">Cantidad: 
+                            <input 
+                                type="number" 
+                                [(ngModel)]="selectedProduct.cantidad" 
+                                (change)="actualizarSubtotal(i)"
+                                min="1"
+                                class="form-control d-inline w-25"
+                            />
+                        </p>
+                        <p class="card-text">Subtotal: {{ selectedProduct.subtotal | currency }}</p>
+                        <button class="btn btn-danger" (click)="eliminarProducto(selectedProduct.producto.idProducto)">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+            <h1>Total: ${{ calcularTotal() }}</h1>
+            <button class="btn btn-primary" (click)="guardarVenta();">Guardar Venta</button>
+        </div>
+        
+    </div>
+</div>
